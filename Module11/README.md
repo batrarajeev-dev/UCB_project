@@ -17,36 +17,8 @@ By translating the core business question **"What factors drive used car prices?
 
 ## 📐 The CRISP-DM Process Framework
 
-           +-----------------------------------+
-           | 1. Business Understanding (Define)|
-           +-----------------+-----------------+
-                             |
-                             v
-           +-----------------+-----------------+
-           | 2. Data Understanding (Explore)   |
-           +-----------------+-----------------+
-                             |
-                             v
-           +-----------------+-----------------+
-           | 3. Data Preparation (Pipeline)    |
-           +-----------------+-----------------+
-                             |
-                             v
-           +-----------------+-----------------+
-           | 4. Predictive Modeling (Iterate)  |
-           +-----------------+-----------------+
-                             |
-                             v
-           +-----------------+-----------------+
-           | 5. Evaluation & Diagnostics (Test)|
-           +-----------------+-----------------+
-                             |
-                             v
-           +-----------------+-----------------+
-           | 6. Business Deployment (Recommend)|
-           +-----------------------------------+
 
-![CRISP-DM pic](./images/crisp.jpeg)
+![CRISP-DM pic](./images/crisp.png)
 
 ### 1. Business Understanding
 * **Business Framing:** Identify what components and attributes consumers value in a used vehicle, allowing a dealership to adjust acquisition strategies, avoid over-paying for depreciated configurations, and maximize throughput speed.
@@ -81,9 +53,13 @@ Vehicle Resale Price ($)
 
 < get a graph of price vs. odometer mileage , and embed it here 
 
-▲│   * │     * *│          * * │               * * *│                             * * * *
-└─────────────────────────────────────────────────────►
-0k     50k     100k    150k    200k    250k    300k+Odometer Mileage (Miles)* 
+               ▲│   * 
+                │     * *
+                │          * * 
+                │               * * *
+                │                             * * * *
+                └─────────────────────────────────────────────────────►
+                0k     50k     100k    150k    200k    250k    300k+Odometer Mileage (Miles)* 
 
 **Insight:** Mileage acts as a strong negative exponent to a vehicle's value. Resale values decline significantly as vehicles cross the 100,000-mile mark.
 
