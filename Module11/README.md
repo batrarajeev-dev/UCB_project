@@ -1,6 +1,6 @@
 ## Project Overview & Analysis
 
-![Project pic](./images/kurt.jpeg)
+                    ![Project pic](./images/kurt.jpeg)
 
 This data science project focuses on analyzing an industry dataset using the CRISP-DM framework to determine what factors drive the price of used cars and providing evidence-based strategy recommendations to a used car dealership.The complete walkthrough, modeling iterations, analysis, and recommendations have been summarized in the interactive documentation file below.Ready Documentation ArtifactYour README.md file has been compiled and formatted into a highly polished, presentation-ready document.[file-tag: used_car_price_analysis_readme.md]Interactive Markdown PreviewMarkdown# What Drives the Price of a Car? 🚗💨
 
@@ -18,7 +18,7 @@ By translating the core business question **"What factors drive used car prices?
 ## 📐 The CRISP-DM Process Framework
 
 
-![CRISP-DM pic](./images/crisp.png)
+                    ![CRISP-DM pic](./images/crisp.png)
 
 ### 1. Business Understanding
 * **Business Framing:** Identify what components and attributes consumers value in a used vehicle, allowing a dealership to adjust acquisition strategies, avoid over-paying for depreciated configurations, and maximize throughput speed.
@@ -51,16 +51,7 @@ The data engine uncovered several dominant trends that heavily influence vehicle
 
 Vehicle Resale Price ($)
 
-< get a graph of price vs. odometer mileage , and embed it here 
-
-               ▲│   * 
-                │     * *
-                │          * * 
-                │               * * *
-                │                             * * * *
-                └─────────────────────────────────────────────────────►
-                0k     50k     100k    150k    200k    250k    300k+
-                                Odometer Mileage (Miles)* 
+                    ![Price Vs Milage pic](./images/price_milage.png)
 
 **Insight:** Mileage acts as a strong negative exponent to a vehicle's value. Resale values decline significantly as vehicles cross the 100,000-mile mark.
 
@@ -117,12 +108,10 @@ Based on the model coefficients and exploratory data analysis, the following act
     Brand Stability Sourcing: Prioritize buying robust import models (Toyota Camry, Honda Accord) which experience slower depreciation curves than general domestic platforms
     Configurational Focus: Prioritize pickups and trucks (such as the Ford F-150) as they command higher transaction prices regardless of production year.
 
-![Vehicle sold pic](./images/vehicle_sold.png)
+                    ![Vehicle sold pic](./images/vehicles_sold.png)
 
 2. Sourcing & Market Arbitration 
     SurchargesCross-Regional Arbitrage: Source truck inventory from coastal urban hubs (e.g., California) where market volume dilutes localized pricing, and resell them in suburban or regional industrial locations where consumer demand commands higher premiums.
-
-![State Resale pic](./images/states_resale.png)
 
 3. Next Steps for Technical Enhancement
     Live Data Integration: Establish real-time data streaming connections with Kaggle or live automotive listing scrapers to evaluate current inventory changes and test model drift.
@@ -152,4 +141,3 @@ Launch your selected server interface:
 
 ``` 
 Open the main file prompt_II_project.ipynb and execute the steps sequentially to reproduce the data transformer pipelines and statistical coefficients.
----
