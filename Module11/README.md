@@ -132,16 +132,16 @@ Based on the model coefficients and exploratory data analysis, the following act
    mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
 
 
-                 ===========================================
-                 Used Car Dealership Inventory Optimization
-                 ===========================================
-                                     │
-         ┌───────────────────────────┼───────────────────────────┐
-         ▼                           ▼                           ▼
-   [Core Inventory]           [Premium Trims]             [Regional Sourcing]
-   Focus on New/Clean         Target specific types       Source truck platforms from
-   truck configs with         with stable imports         high-volume, competitive
-   mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
+                            ===========================================
+                            Used Car Dealership Inventory Optimization
+                            ===========================================
+                                                │
+                    ┌───────────────────────────┼───────────────────────────┐
+                    ▼                           ▼                           ▼
+            [Core Inventory]           [Premium Trims]             [Regional Sourcing]
+            Focus on New/Clean         Target specific types       Source truck platforms from
+            truck configs with         with stable imports         high-volume, competitive
+            mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
 
 1. Strategic Inventory Selection
     The Value of Condition: Vehicles with a structural designation of "New" or "Clean" retain their resale premium at an exponential rate compared to vehicles with degraded interior/exterior conditions.
