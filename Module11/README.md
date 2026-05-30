@@ -131,7 +131,7 @@ Based on the model coefficients and exploratory data analysis, the following act
    truck configs with         with stable imports         high-volume, competitive
    mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
 
----
+
 1. Strategic Inventory Selection
     The Value of Condition: Vehicles with a structural designation of "New" or "Clean" retain their resale premium at an exponential rate compared to vehicles with degraded interior/exterior conditions.
     Brand Stability Sourcing: Prioritize buying robust import models (Toyota Camry, Honda Accord) which experience slower depreciation curves than general domestic platforms
@@ -148,17 +148,19 @@ Based on the model coefficients and exploratory data analysis, the following act
 
 ## 💻 Technical Setup & Execution Instructions
 ###   Prerequisites
-       Ensure your localized workstation features an active conda or standard Python development environment (Python 3.8+ recommended).
-   Dependency Installation
-      Install the complete analytical stack by running the following command in your terminal:
+Ensure your localized workstation features an active conda or standard Python development environment (Python 3.8+ recommended).
+Dependency Installation
+    Install the complete analytical stack by running the following command in your terminal:
 
 ``` python
-#           Bashpip 
-#           install numpy pandas matplotlib seaborn scikit-learn ydata-profiling plotly
+            Bash
+            install numpy pandas matplotlib seaborn scikit-learn ydata-profiling plotly
 ```
 
 Execution Notebook Context
     Place the underlying data set inside a localized root tracking folder named data/vehicles.csv.
+
+    
     Launch your selected server interface:
 ``` python
             Bash
