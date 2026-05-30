@@ -161,11 +161,11 @@ Execution Notebook Context
     Place the underlying data set inside a localized root tracking folder named data/vehicles.csv.
 
     
-    Launch your selected server interface:
+Launch your selected server interface:
 ``` python
             Bash
             jupyter notebook
 
 ``` 
-    Open the main file prompt_II_project.ipynb and execute the steps sequentially to reproduce the data transformer pipelines and statistical coefficients.
+Open the main file prompt_II_project.ipynb and execute the steps sequentially to reproduce the data transformer pipelines and statistical coefficients.
 ---
