@@ -1,6 +1,7 @@
 ## Project Overview & Analysis
 
 This data science project focuses on analyzing an industry dataset using the CRISP-DM framework to determine what factors drive the price of used cars and providing evidence-based strategy recommendations to a used car dealership.The complete walkthrough, modeling iterations, analysis, and recommendations have been summarized in the interactive documentation file below.Ready Documentation ArtifactYour README.md file has been compiled and formatted into a highly polished, presentation-ready document.[file-tag: used_car_price_analysis_readme.md]Interactive Markdown PreviewMarkdown# What Drives the Price of a Car? 🚗💨
+
 ### An End-to-End CRISP-DM Exploratory Analysis and Explanatory Predictive Modeling Framework
 
 ---
@@ -73,7 +74,15 @@ The data engine uncovered several dominant trends that heavily influence vehicle
 
 ### Price Optimization vs. Odometer Mileage
 
-Vehicle Resale Price ($)▲│   * │     * *│          * * │               * * *│                             * * * *└─────────────────────────────────────────────────────►0k     50k     100k    150k    200k    250k    300k+Odometer Mileage (Miles)* **Insight:** Mileage acts as a strong negative exponent to a vehicle's value. Resale values decline significantly as vehicles cross the 100,000-mile mark.
+Vehicle Resale Price ($)
+
+< get a graph of price vs. odometer mileage , and embed it here 
+
+▲│   * │     * *│          * * │               * * *│                             * * * *
+└─────────────────────────────────────────────────────►
+0k     50k     100k    150k    200k    250k    300k+Odometer Mileage (Miles)* 
+
+**Insight:** Mileage acts as a strong negative exponent to a vehicle's value. Resale values decline significantly as vehicles cross the 100,000-mile mark.
 
 ### Market Distribution Dynamics
 * **Geographic Sales Concentration:** **California (CA)** ranks as the highest volume market within regional transactions, closely followed by industrial and urban distribution networks across Florida (FL) and New York (NY).
@@ -102,7 +111,17 @@ Pipeline(steps=[
     ('svd', TruncatedSVD(n_components=11)),
     ('regressor', Lasso(alpha=0.1))
 ])
-Key Advantage: This system compresses sparse target-encoded vectors into 11 principal component metrics, maximizing structural alignment while maintaining excellent stability on unseen testing data ($R^2$: 0.464).📈 Strategic Business & Deployment FrameworksBased on the model coefficients and exploratory data analysis, the following actionable recommendations are provided for dealership alignment:                 ===========================================
+```
+
+---
+Key Advantage: This system compresses sparse target-encoded vectors into 11 principal component metrics, maximizing structural alignment while maintaining excellent stability on unseen testing data ($R^2$: 0.464).
+---
+
+## 📈 Strategic Business & Deployment Frameworks
+
+Based on the model coefficients and exploratory data analysis, the following actionable recommendations are provided for dealership alignment:                 
+
+                 ===========================================
                  Used Car Dealership Inventory Optimization
                  ===========================================
                                      │
