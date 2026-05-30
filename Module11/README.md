@@ -59,7 +59,8 @@ Vehicle Resale Price ($)
                 │               * * *
                 │                             * * * *
                 └─────────────────────────────────────────────────────►
-                0k     50k     100k    150k    200k    250k    300k+Odometer Mileage (Miles)* 
+                0k     50k     100k    150k    200k    250k    300k+
+                                Odometer Mileage (Miles)* 
 
 **Insight:** Mileage acts as a strong negative exponent to a vehicle's value. Resale values decline significantly as vehicles cross the 100,000-mile mark.
 
@@ -116,8 +117,12 @@ Based on the model coefficients and exploratory data analysis, the following act
     Brand Stability Sourcing: Prioritize buying robust import models (Toyota Camry, Honda Accord) which experience slower depreciation curves than general domestic platforms
     Configurational Focus: Prioritize pickups and trucks (such as the Ford F-150) as they command higher transaction prices regardless of production year.
 
+![Vehicle sold pic](./images/vehicle_sold.png)
+
 2. Sourcing & Market Arbitration 
     SurchargesCross-Regional Arbitrage: Source truck inventory from coastal urban hubs (e.g., California) where market volume dilutes localized pricing, and resell them in suburban or regional industrial locations where consumer demand commands higher premiums.
+
+![State Resale pic](./images/states_resale.png)
 
 3. Next Steps for Technical Enhancement
     Live Data Integration: Establish real-time data streaming connections with Kaggle or live automotive listing scrapers to evaluate current inventory changes and test model drift.
