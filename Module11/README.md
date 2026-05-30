@@ -124,9 +124,11 @@ Key Advantage: This system compresses sparse target-encoded vectors into 11 prin
 3. Next Steps for Technical Enhancement
     Live Data Integration: Establish real-time data streaming connections with Kaggle or live automotive listing scrapers to evaluate current inventory changes and test model drift.
     Advanced Engine Testing: Transition from classic linear pipelines into boosted tree models (such as XGBoost, LightGBM, or CatBoost) to test if non-linear feature split dynamics yield higher predictive accuracy than the current regression benchmark.
-    
+
+---
+
 ## 💻 Technical Setup & Execution Instructions
-#   Prerequisites
+###   Prerequisites
 #       Ensure your localized workstation features an active conda or standard Python development environment (Python 3.8+ recommended).
 #   Dependency Installation
 #       Install the complete analytical stack by running the following command in your terminal:
@@ -139,3 +141,4 @@ Execution Notebook Context
             Bash
             jupyter notebook
     Open the main file prompt_II_project.ipynb and execute the steps sequentially to reproduce the data transformer pipelines and statistical coefficients.
+---
