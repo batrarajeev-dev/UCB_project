@@ -1,5 +1,7 @@
 ## Project Overview & Analysis
 
+![Project pic](./images/kurt.jpeg)
+
 This data science project focuses on analyzing an industry dataset using the CRISP-DM framework to determine what factors drive the price of used cars and providing evidence-based strategy recommendations to a used car dealership.The complete walkthrough, modeling iterations, analysis, and recommendations have been summarized in the interactive documentation file below.Ready Documentation ArtifactYour README.md file has been compiled and formatted into a highly polished, presentation-ready document.[file-tag: used_car_price_analysis_readme.md]Interactive Markdown PreviewMarkdown# What Drives the Price of a Car? 🚗💨
 
 ### An End-to-End CRISP-DM Exploratory Analysis and Explanatory Predictive Modeling Framework
@@ -44,6 +46,7 @@ By translating the core business question **"What factors drive used car prices?
            | 6. Business Deployment (Recommend)|
            +-----------------------------------+
 
+![CRISP-DM pic](./images/crisp.jpeg)
 
 ### 1. Business Understanding
 * **Business Framing:** Identify what components and attributes consumers value in a used vehicle, allowing a dealership to adjust acquisition strategies, avoid over-paying for depreciated configurations, and maximize throughput speed.
@@ -120,28 +123,17 @@ Key Advantage: This system compresses sparse target-encoded vectors into 11 prin
 
 Based on the model coefficients and exploratory data analysis, the following actionable recommendations are provided for dealership alignment:                 
 
-                 ===========================================
-                 Used Car Dealership Inventory Optimization
-                 ===========================================
-                                     │
-         ┌───────────────────────────┼───────────────────────────┐
-         ▼                           ▼                           ▼
-   [Core Inventory]           [Premium Trims]             [Regional Sourcing]
-   Focus on New/Clean         Target specific types       Source truck platforms from
-   truck configs with         with stable imports         high-volume, competitive
-   mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
 
-
-                            ===========================================
-                            Used Car Dealership Inventory Optimization
-                            ===========================================
-                                                │
-                    ┌───────────────────────────┼───────────────────────────┐
-                    ▼                           ▼                           ▼
-            [Core Inventory]           [Premium Trims]             [Regional Sourcing]
-            Focus on New/Clean         Target specific types       Source truck platforms from
-            truck configs with         with stable imports         high-volume, competitive
-            mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
+                                    ===========================================
+                                    Used Car Dealership Inventory Optimization
+                                    ===========================================
+                                                        │
+                            ┌───────────────────────────┼───────────────────────────┐
+                            ▼                           ▼                           ▼
+                    [Core Inventory]           [Premium Trims]             [Regional Sourcing]
+                    Focus on New/Clean         Target specific types       Source truck platforms from
+                    truck configs with         with stable imports         high-volume, competitive
+                    mileage < 100k miles       (Toyota, Honda).            coastal markets (e.g., CA).
 
 1. Strategic Inventory Selection
     The Value of Condition: Vehicles with a structural designation of "New" or "Clean" retain their resale premium at an exponential rate compared to vehicles with degraded interior/exterior conditions.
