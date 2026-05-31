@@ -16,7 +16,7 @@ By tracking training time, training accuracy, and test accuracy, we perform a si
 
   ![CRISP-DM pic](./images/crisp.png)
 
-- We use CRISP DM framework for this project and iterate thru the stages as we conduct EDA, model the data with base configuration of classifier and subsequently do Hypertuning. Subsequently to conduct evaluation and recommendation.
+We follow CRISP DM framework for this project and iterate thru the stages as we conduct EDA, model the data with base configuration of classifier and subsequently do Hypertuning. Subsequently to conduct evaluation and recommendation.
 
 ## Dataset
 - Source: UCI Machine Learning Repository - Bank Marketing dataset
