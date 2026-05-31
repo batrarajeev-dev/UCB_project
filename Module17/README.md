@@ -29,9 +29,9 @@ By tracking training time, training accuracy, and test accuracy, we perform a si
 - **Data Ingestion and Exploration**: Loaded using pandas. Handled semi-colon delimiters, inspected dimensions, feature names, data types, and value balances.  
 - **Exploratory Data Analysis (EDA)**: Generated dynamic data profiling reports using ydata-profiling (ProfileReport) to locate multicollinearity and anomalies.  
 - **Data Preprocessing**:
--- Categorical variable encoding via one-hot/dummy encoding.  
--- Feature engineering/drop rules (e.g., handling the duration column carefully as it explicitly skews predictive validity).  
--- Numerical feature scaling utilizing StandardScaler. 
+  - Categorical variable encoding via one-hot/dummy encoding.  
+  - Feature engineering/drop rules (e.g., handling the duration column carefully as it explicitly skews predictive validity).  
+  - Numerical feature scaling utilizing StandardScaler. 
 - **Train/Test Splitting**: Stratified 80/20 train/test division to handle the structural imbalance of the target label.  
 - **Baseline Definition**: Established a majority-class classifier showing a baseline test accuracy of 88.65% (predicting no for all instances).  
 - **Model Benchmarking**: Fitted default and optimized structures for all four frameworks and visualizes results with a combined bar/line chart
