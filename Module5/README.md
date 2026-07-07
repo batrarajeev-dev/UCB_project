@@ -75,16 +75,18 @@ So the hypothesis is: accepted bar coupon drivers are generally younger, frequen
 
 ##  Repository Structure
 
+```text
 ├── data/
-│   └── coupons.csv                                                # Raw dataset from UCI repository
-├── images/                                                        # Plots from the EDA 
-│   └── Coupon Accpetance and rejection overall.png                
-│   └── Coupon_Type_distribution.png 
-│   └── Coupon_accepted_by_population.png 
-│   └── Analysis_under_and_over_25.png 
+│   └── coupons.csv                             # Raw dataset from UCI repository
+├── images/                                     # Plots from the EDA 
+│   ├── Coupon Accpetance and rejection overall.png                
+│   ├── Coupon_Type_distribution.png 
+│   ├── Coupon_accepted_by_population.png 
+│   ├── Analysis_under_and_over_25.png 
 │   └── Analysis_across_groups.png 
-├── prompt.ipynb                                                   # Main Jupyter Notebook containing the executable script & analysis
-└── README.md                                                      # Project documentation and summary report
+├── prompt.ipynb                                # Main Jupyter Notebook containing analysis
+└── README.md                                   # Project documentation and summary report
+```
 
 ---
 
