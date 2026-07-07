@@ -118,7 +118,7 @@ A clean decoupling of components is built directly using `scikit-learn`'s `Pipel
 * **Categorical Encoding**: One-hot categorical explosion using `OneHotEncoder(handle_unknown='ignore')`.
 
   ![Pre Processing pic](./images/Pre_Processing_Pipeline.jpg)
----
+--
 The system evaluates baseline performance across standard algorithms , compares the same and then hyperparameter tunnign is done via `RandomizedSearchCV`. 
 
 Evaluated models include:
