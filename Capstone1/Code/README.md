@@ -156,7 +156,6 @@ A consolidated review of the training profiles and testing scores across tuned a
 ---
 
 ## Feature importance — method and key findings
-'''
 - Method: used the selected best pipeline (`best_model`), extracted the fitted classifier and used its `feature_importances_` (fallback to coef_ / permutation importance if unavailable). 
 - Numeric features  trip_duration, total_distance, total_fuel, axle_weight_average, Capacity, GCW, GVW.  
 - Top contributors (by importance):
