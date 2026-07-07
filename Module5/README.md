@@ -57,6 +57,7 @@ Drivers who accepted the bar coupons are likely:
 * possibly more price-sensitive / lower income, since they also use cheap restaurants frequently
 
 So the hypothesis is: accepted bar coupon drivers are generally younger, frequent bar customers, and may have lower income or value inexpensive entertainment options.
+
 ![Coupon_Acccepted_above_below25](./images/Analysis_under_and_over_25.png)
 
 ![Coupon_Acccepted_across_groups](./images/Analysis_across_groups.png)
@@ -92,11 +93,12 @@ So the hypothesis is: accepted bar coupon drivers are generally younger, frequen
 
 ##  Running Instruction
 
+```text
 pip install pandas numpy matplotlib seaborn notebook
 
 jupyter notebook
 
 Click on prompt.ipynb and run all cells sequentially.
-
-
 ```
+
+---
