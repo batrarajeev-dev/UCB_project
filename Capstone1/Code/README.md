@@ -86,18 +86,16 @@ Wwth the above the consideraitons the project utilizes a substantial operational
 ---
 ## Statistical Diagnostics and Key Visualization Findings
 
-* Analysis was done to check for 
-  - Special Needs V/s Make and model  
+Analysis was done at an overall level to check across different corelations using **ydata_profiling** library - [ Click for the details ](./data/vehicle_trip_profile_report.html) and then specific pair to check for co-relations
+- Special Needs V/s Make and model  
 ![Special Needs V/s Make and model pic](./images/special_needs_vs_make_and_model.png)
-   - hows long the trip are and distance traveled and by diff type of vehcile as defined by Special Needs 
-  >> ![trip durationpic](./images/Trip_duration_distribution.png)
-  >> ![Special Needs V/s distance pic](./images/special_needs_vs_total_distance.png)
-
- - Checked for correlation across all the numerical features 
-  >> ![coorelation](./images/correlation_matrix.png)
-
- - Plotted to check for outliers across categories : given that the scales of data , log scale was used.
- >> ![outliers](./images/Box_Plot_for_outliers.png)
+- How long the trip are and distance traveled and by diff type of vehcile as defined by Special Needs 
+>> ![trip durationpic](./images/Trip_duration_distribution.png)
+>> ![Special Needs V/s distance pic](./images/special_needs_vs_total_distance.png)
+- Checked for correlation across all the numerical features 
+>> ![coorelation](./images/correlation_matrix.png)
+- Plotted to check for outliers across categories : given that the scales of data , log scale was used.
+>> ![outliers](./images/Box_Plot_for_outliers.png)
 
 
 ##  Modeling and Optimization Strategy
