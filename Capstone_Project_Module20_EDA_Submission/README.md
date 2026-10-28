@@ -1,7 +1,7 @@
 # European Commercial Fleet Telemetry Analysis and Vehicle Classification (`Make_n_Model`)
 **Capstone Project — Module 20: Exploratory Data Analysis (EDA) and Baseline Model Report**
 
-![Capstone EDA Visual Summary Dashboard](images/00_eda_visualizations_summary.png)
+![Capstone EDA Visual Summary Dashboard](code/images/00_eda_visualizations_summary.png)
 
 ## 1. Executive Summary and Business Objective
 
@@ -18,7 +18,7 @@ This stage of the Capstone projet focuses on the EDA and Baseline model analyzes
 ## 2. The CRISP-DM Process Framework
 
 
-  ![CRISP-DM pic](./images/crisp.png)
+  ![CRISP-DM pic](./code/images/crisp.png)
 
 We follow CRISP DM framework for this project and iterate thru the stages as we conduct EDA, model the data with base configuration of classifier and subsequently do Hypertuning. Subsequently to conduct evaluation and recommendation.
 
@@ -64,7 +64,7 @@ We follow CRISP DM framework for this project and iterate thru the stages as we 
 
 The , `sns.heatmap(vtd_df.isna())` evaluates missingness across all `391,204` rows and `19` columns, confirming **0.0% missing values**:
 
-![Missing Values Heatmap](images/01_missing_values_heatmap.png)
+![Missing Values Heatmap](code/images/01_missing_values_heatmap.png)
 
 ## 4. Exploratory Data Analysis (EDA) and Visual Findings
 
@@ -72,7 +72,7 @@ The , `sns.heatmap(vtd_df.isna())` evaluates missingness across all `391,204` ro
 
 Because the 7 numerical variables span five orders of magnitude (`Capacity` starting at `1.5 tonnes` vs. `trip_duration` reaching `332,649 seconds`), below horizontal boxplots on a logarithmic scale (`plt.xscale('log')`):
 
-![Log-Scale Numerical Outlier Boxplot](images/10_numerical_outliers_boxplot.png)
+![Log-Scale Numerical Outlier Boxplot](code/images/10_numerical_outliers_boxplot.png)
 
 | Numerical Feature | Mean | Std Dev | Min | 5th % | Q1 (25%) | Median (50%) | Q3 (75%) | 95th % | Max | IQR | Skewness | CV |
 | :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -88,7 +88,7 @@ Because the 7 numerical variables span five orders of magnitude (`Capacity` star
 
 We compute `vtd_df.corr(numeric_only=True)` and renders an annotated heatmap revealing **two tightly coupled collinear clusters**:
 
-![Correlation Matrix Heatmap](images/02_correlation_matrix_heatmap.png)
+![Correlation Matrix Heatmap](code/images/02_correlation_matrix_heatmap.png)
 
 | Feature | `trip_duration` | `total_distance` | `total_fuel` | `axle_weight_average` | `GCW` | `GVW` | `Capacity` |
 | :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -107,9 +107,9 @@ The data reveals two structural signatures of commercial European fleet operatio
 1. **Five Multi-Modal Trip Duration Peaks**:
    - `trip_duration` separates into **5 discrete operational regimes** separated by mandatory EU tachograph daily rest periods (`11 hours = 39,600 seconds`) between driving shifts on multi-day trips:
 
-![Total Distance vs Trip Duration Scatter](images/05_distance_vs_duration_scatter.png)
+![Total Distance vs Trip Duration Scatter](code/images/05_distance_vs_duration_scatter.png)
 
-![Trip Duration Distribution Histogram](images/06_trip_duration_distribution.png)
+![Trip Duration Distribution Histogram](code/images/06_trip_duration_distribution.png)
 
 2. **Three-Tier Vehicle Staircase in the Corner Pairplot**:
    - Inspecting the pairplot scatter subplots of `axle_weight_average`, `total_distance`, and `total_fuel` uncovers **3 exact operational vehicle tiers** built into the dataset:
@@ -117,17 +117,17 @@ The data reveals two structural signatures of commercial European fleet operatio
      - **Tier 2 — Medium-Duty Rigid Trucks (`GCW 24–32t, Cap 6–10t`)**: Distance `50–450 km`, Fuel Rate `15–25 L/100km`, Axle Weight `3,000–7,000 kg`.
      - **Tier 3 — Heavy-Duty Articulated Trucks (`GCW 44–60t, Cap 24–40t`)**: Distance `200–2,500 km`, Fuel Rate `25–35 L/100km`, Axle Weight `6,000–11,500 kg`.
 
-![Numerical Features Corner Pairplot](images/11_numerical_features_pairplot.png)
+![Numerical Features Corner Pairplot](code/images/11_numerical_features_pairplot.png)
 
 ### 4.4 Special Need Category Distribution and Boxplots
 
 Next we compare `trip_duration`, `total_fuel`, and `total_distance` across all 10 `special_need` cargo categories, while **Cells 24 and 27** rank the category trip counts:
 
-![Special Need Boxplots (Duration, Fuel, Distance)](images/03_special_need_boxplots.png)
+![Special Need Boxplots (Duration, Fuel, Distance)](code/images/03_special_need_boxplots.png)
 
-![Top Special Need Categories](images/04_top_special_need_categories.png)
+![Top Special Need Categories](code/images/04_top_special_need_categories.png)
 
-![Special Need Alphabetical Bar Chart](images/07_special_need_sorted_bar.png)
+![Special Need Alphabetical Bar Chart](code/images/07_special_need_sorted_bar.png)
 
 | Special Need | Trip Count | Share (%) | Unique Models | Mode (`top`) Vehicle | Mode `freq` (Share of Category) | Median Duration (s / hrs) | Distance Q1 – Median – Q3 (km) | Fuel Q1 – Median – Q3 (L) | Active Weight Tiers |
 | :--- | ---: | ---: | ---: | :--- | ---: | ---: | ---: | ---: | :--- |
@@ -146,7 +146,7 @@ Next we compare `trip_duration`, `total_fuel`, and `total_distance` across all 1
 
 The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_need'])` reveals that every vehicle model operates in only **1, 2, or at most 3 `special_need` categories**:
 
-![Make and Model vs Special Need Stacked Bar Chart](images/08_make_model_vs_special_need_stacked.png)
+![Make and Model vs Special Need Stacked Bar Chart](code/images/08_make_model_vs_special_need_stacked.png)
 
 | Rank | `Make_n_Model` (Target `y`) | Total Trips | Share (%) | Weight Tier | `GCW` (t) | `GVW` (t) | `Capacity` (t) | Exact `special_need` Breakdown |
 | :-: | :--- | ---: | ---: | :---: | ---: | ---: | ---: | :--- |
@@ -174,7 +174,7 @@ The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_ne
 
 ### 4.6 Yearly and Geographic Distributions 
 
-![Yearly Distribution of Trips](images/09_yearly_trip_distribution.png)
+![Yearly Distribution of Trips](code/images/09_yearly_trip_distribution.png)
 
 - **Uniform Annual Trip Volume (`2018–2023`)**: `2018` (`64,979`, `16.61%`), `2019` (`65,270`, `16.68%`), `2020` (`65,346`, `16.70%`), `2021` (`65,238`, `16.68%`), `2022` (`65,215`, `16.67%`), `2023` (`65,156`, `16.66%`).
 - **Geographic Distribution (`Country` and `Region`)**: `Region` is 100% constant (`"Europe"`), while `Country` is uniformly distributed across **France** (`52,022`, `13.30%`), **Netherlands** (`50,874`, `13.00%`), **Italy** (`50,124`, `12.81%`), **Sweden** (`49,085`, `12.55%`), **Germany** (`47,928`, `12.25%`), **Belgium** (`47,529`, `12.15%`), **Poland** (`47,463`, `12.13%`), and **Spain** (`46,179`, `11.80%`).
@@ -189,7 +189,7 @@ The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_ne
 4. **Step 4 — Preprocessing via `ColumnTransformer`**: Apply `SimpleImputer(strategy='median')` + `StandardScaler()` to numerical features and `SimpleImputer(strategy='most_frequent')` + `OneHotEncoder(handle_unknown='ignore')` to `special_need` and `Country`.
 5. **Step 5 — Benchmark Across Feature Tiers**:
 
-![Baseline Model Accuracy Progression and Recall Breakdown](images/12_baseline_model_progression.png)
+![Baseline Model Accuracy Progression and Recall Breakdown](code/images/12_baseline_model_progression.png)
 
 
 ## 6. Feature Engineering and Preprocessing Pipeline
@@ -234,7 +234,7 @@ Four baseline classifiers were trained and evaluated on the 20-feature preproces
 | **SVM (Linear)** | `kernel='linear'` | 2,002.49 | 0.7191 | 0.7166 | 0.7260 | 0.6972 | NaN |
 | **K-Nearest Neighbors** | `n_neighbors=5` | **1.26** | 0.7884 | 0.6781 | 0.6803 | 0.6768 | 0.9083 |
 
-![Baseline Model Performance Comparison — F1 Score vs Train Time](images/13_baseline_f1_vs_train_time.png)
+![Baseline Model Performance Comparison — F1 Score vs Train Time](code/images/13_baseline_f1_vs_train_time.png)
 
 ### 7.1. Key Benchmark Takeaways
 
@@ -282,9 +282,9 @@ Evaluating Logistic Regression on the 78,241 test samples reveals exact class-by
 * **Light-Duty Pair (`Fuso_Canter` vs. `Isuzu_N-Series`)**: Half of `Isuzu_N-Series` test instances (`51.1%`) are predicted as `Fuso_Canter`, yielding `1.0000` recall for `Fuso_Canter` and `1.0000` precision for `Isuzu_N-Series` (`AUC = 0.994` and `0.993`).
 * **44-Tonne Tractor Cluster (`DAF_XG+`, `Iveco_S-Way`, `MAN_TGX`, `Mercedes_Actros`, `Renault_T High`, `Scania_R-Series`, `Volvo_FH`)**: Because all seven models share `GCW = 44.0`, `GVW = 26.0`, and `Capacity = 24.0`, off-diagonal confusion concentrates heavily into `Volvo_FH`, `Mercedes_Actros`, and `DAF_XG+`. Even so, their OvR ROC-AUC scores remain between **0.872 and 0.953**, confirming strong rank-ordering within the 44t tier relative to the other 14 classes.
 
-![Confusion Matrix — Logistic Regression](images/14_logistic_regression_confusion_matrix.png)
+![Confusion Matrix — Logistic Regression](code/images/14_logistic_regression_confusion_matrix.png)
 
-![Multiclass ROC — Logistic Regression](images/15_multiclass_roc_logistic_regression.png)
+![Multiclass ROC — Logistic Regression](code/images/15_multiclass_roc_logistic_regression.png)
 
 ## 9. Saved Model Artifact and Usage
 
