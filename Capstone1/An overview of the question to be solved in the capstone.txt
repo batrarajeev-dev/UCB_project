@@ -1,0 +1,11 @@
+An overview of the question to be solved in the capstone.
+Globally over 70% of the freight moves on road and the fleet management is estimated to be a ~30 billion $ business with 18% CAGR.  However, fleet management is a very thrifty business as it relies on razor thin margins and seasonality. A fleet is almost always made up of vehicles from different manufacturers, models and configurations. This mix ads up to the problem of selecting the right vehicle for a given mission considering multiple of parameters such as load, distance, destination etc. 
+The aim of this project is to build a vehicle recommendation and assignment model for commercial vehicle fleets to ensure that correct vehicle is assigned to correct mission as it can help the fleet owner save between 2~3% of the operational cost and this is a direct addition to the bottom line. 
+
+Identification of the type of data that will be used to solve the question.
+To build this model we will be using fleet data (Vehicle model, fuel efficiency, availability), mission data (load, volume, distance, route), special needs (refer for cold chain, tipper etc)
+
+List of techniques that could be used to answer the question identified.
+To build this model we will follow the CRISP-DM approach and carry out EDA on the data followed by feature engineering, encoding and Regularization (L1 and L2). Subsequently we will conduct analysis across different model type (including K-Nearest Neighbours) and select the best model-based Accuracy, Precision, Recall, and F1-Score
+ 
+
