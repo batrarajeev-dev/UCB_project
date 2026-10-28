@@ -1,30 +1,53 @@
+### Project Title
 # European Commercial Fleet Telemetry Analysis and Vehicle Classification (`Make_n_Model`)
-**Capstone Project — Module 20: Exploratory Data Analysis (EDA) and Baseline Model Report**
 
-![Capstone EDA Visual Summary Dashboard](code/images/00_eda_visualizations_summary.png)
+**Author**
+Rajeev Batra
 
-## 1. Executive Summary and Business Objective
+#### Executive summary
 
-Commercial fleet operators managing diverse multi-brand vehicle fleets across Europe face a core operational optimization problem: matching trip demand profiles (distance, duration, payload weight, fuel budget, and specialized cargo body requirements) to the optimal vehicle make and model. Assigning an oversized heavy-haulage tractor to short regional box deliveries inflates fuel burn and capital depreciation, while under-specifying vehicle capacity risks regulatory gross weight violations and premature mechanical wear.
+Globally over 70% of the freight moves on road and the fleet management is estimated to be a 30 billion $ business with 18% CAGR.  However, fleet management is a very thrifty business as it relies on razor thin margins and seasonality. A fleet is almost always made up of vehicles from different manufacturers, models and configurations. This ads up to the problem of selecting the right vehicle for a given mission considering multiple of parameters such as load, distance, destination etc. 
+The aim of this project is to build a vehicle recommendation and assignment model for commercial vehicle fleets to ensure that correct vehicle is assigned to correct mission as it can help the fleet owner save between 2~3% of the operational cost and this is a direct addition to the bottom line. 
 
-This stage of the Capstone projet focuses on the EDA and Baseline model analyzes **400,000 synthetic European commercial vehicle trip records** (`synthetic_fleet_data_400k_splneeds.csv`) spanning **January 2018 through December 2023** across **8 European countries**, **10 commercial vehicle manufacturers (OEMs)**, and **21 distinct vehicle models**. Following data cleaning and scope refinement (**391,204 cleaned records**), this report documents:
+#### Rationale
+**Why should anyone care about this question?**
 
-1. **Data Quality and Preprocessing**: Removal of non-predictive identifiers (`trip_id`), exclusion of non-commercial emergency transport records (`special_need == 'Ambulance'`, removing **8,796 rows** or **2.20%**), timestamp standardization, and verification of **0.0% missing values** and **0.0% duplicate rows**.
-2. **Target Engineering**: Creation of a composite multi-class target variable, **`Make_n_Model`** (`manufacturer + '_' + Model`), resolving potential model-name collisions across OEMs and defining a **21-class supervised classification task**.
-3. **Exploratory Data Analysis and Visual Insights**: Quantitative and visual investigation of feature distributions, log-scale outlier structures, 5-mode trip duration regimes, 3-tier staircase payload structures, collinearity clusters, and cross-tabulated operational boundaries between `special_need` cargo categories and `Make_n_Model`.
-4. **Leakage-Safe Baseline Modeling Strategy**: Identification of deterministic identifier/leakage columns (`manufacturer`, `Model`, `Group`, `wmi`, `plant`, `Serial Number`) and constant features (`Region = 'Europe'`), paired with exact baseline accuracy benchmarks.
+ Over 70% of global freight moves by road, yet trucking and fleet operators work on razor-thin profit margins where a few cents per mile determine whether a trip makes or loses money. Most commercial fleets own a mixed fleet of trucks from different manufacturers and sizes, and dispatchers often assign whichever truck is simply available first rather than the one best suited for that specific load and route. When this problem goes unanswered, fleets routinely send oversized trucks on light runs or fuel-heavy models onto long hauls—wasting thousands of gallons of fuel, accelerating wear and tear, and eating directly into company survival during slow seasons. By translating complex vehicle and route trade-offs into a simple "best truck for this trip" recommendation that any dispatcher can use without a data science background, this analysis helps fleet owners cut 2–3% off their daily operating costs—savings that flow straight to their bottom line while reducing unnecessary fuel emissions.
+ 
+#### Research Question
+**What are you trying to answer?**
 
+How can we match commercial fleet vehicles to freight missions based on load, route, and special handling needs to minimize under-utilization and reduce trip operating costs by 2–3% and this is big savings given the razor thin  margins in fleet management.
 
-## 2. The CRISP-DM Process Framework
+#### Data Sources
+**What data will you use to answer you question?**
 
+Because commercial carriers treat multi-year fleet telematics as proprietary, gathering bulk historical records across multiple fleets over a six-year window was not feasible due to data confidentiality. Instead,  based on the discussion with the learning facilitator I combined real-world fleet seed data with a rule-constrained LLM generation pipeline to build a realistic dataset of 400,000 trips across 10,000 unique vehicles spanning 2018–2024. To ensure the synthetic data reflects actual commercial operations, the generation process enforces four domain rules:
 
-  ![CRISP-DM pic](./code/images/crisp.png)
+Immutable Vehicle Registry: A master registry locks physical specifications—Gross Vehicle Weight (GVW), Gross Combination Weight (GCW), and payload capacity—to unique serial numbers across 10 manufacturers (Fuso, Isuzu, Hino, Renault, MAN, DAF, Volvo, IVECO, Scania, and Mercedes-Benz), ranging from 1.5-tonne panel vans (Renault Master) to 40-tonne heavy haulers (Volvo FH16, Scania S-Series V8).
 
-We follow CRISP DM framework for this project and iterate thru the stages as we conduct EDA, model the data with base configuration of classifier and subsequently do Hypertuning. Subsequently to conduct evaluation and recommendation.
+Physics and Regulatory Constraints: Trip distances, speeds, and durations follow vehicle segment physics and EU road laws—limiting Light Commercial Vehicles (LCVs) to short urban deliveries (5–150 km) while capping heavy trucks (200–2,500 km) at 85–90 km/h and automatically inserting EU-mandated 45-minute breaks every 4.5 driving hours and 11-hour rest intervals every 9 driving hours.
 
-## 3. Dataset Overview, Schema Dictionary and Data Cleaning
+Six-Year Timeline Alignment: Trip start times are distributed across a 2018–2024 window, with end timestamps calculated to the exact second from driving time plus mandatory rest offsets.
 
-### 3.1 High-Level Dataset Summary (`ydata-profiling` Audit)
+Chassis-Matched Vocations: Special mission needs are paired with appropriate chassis configurations, mapping urban box and refrigerated units to LCVs, tippers and refuse bodies to medium rigid trucks (such as DAF LF and Volvo FL), and cold-chain, container, timber, and heavy haulage to high-tonnage tractors.
+
+#### Methodology
+**What methods are you using to answer the question?**
+
+Following the CRISP-DM framework, I will begin with Exploratory Data Analysis (EDA), feature encoding, and L1/L2 regularization to handle mixed vehicle and route attributes. I will then train and compare classification and recommendation algorithms—including K-Nearest Neighbors (KNN), tree-based ensembles, SVM and regularized linear models—evaluated on Accuracy, Precision, Recall, and F1-Score, paired with a custom cost-benefit loss function that explicitly penalizes payload under-utilization and excess fuel burn.
+
+#### Results
+**What did your research find?**
+
+The project will produce a decision-support recommendation tool that ranks and assigns the most cost-effective available vehicle for any incoming freight order, accompanied by a business dashboard comparing projected fuel and operating expenses against baseline manual dispatch decisions.
+
+#### Next steps
+**What suggestions do you have for next steps?**
+
+## 1. Dataset Overview, Schema Dictionary and Data Cleaning
+
+### 1.1 High-Level Dataset Summary (`ydata-profiling` Audit)
 
 | Metric | Raw Dataset | Cleaned EDA Dataset | Analytical and Modeling Impact |
 | :--- | ---: | ---: | :--- |
@@ -35,7 +58,7 @@ We follow CRISP DM framework for this project and iterate thru the stages as we 
 | **Memory Footprint** | 58.0+ MB | 263.2 MiB (profiled) | 7 numerical, 9 categorical, 2 date, and 1 text (`Serial Number`) variables |
 | **Date Coverage** | 2018-01-01 to 2023-12-31 | 2018-01-01 to 2023-12-31 | 2,191 distinct start dates; `trip_end_time` extends to 2024-01-03 (2,194 dates) |
 
-### 3.2 Complete Feature Dictionary and Leakage Audit  < need to clean the ML Pipeline Role column >
+### 1.2 Complete Feature Dictionary and Leakage Audit  < need to clean the ML Pipeline Role column >
 
 | # | Column Name | Dtype | Distinct | Example Values | Description | ML Pipeline Role |
 | :-: | :--- | :--- | ---: | :--- | :--- | :--- |
@@ -60,15 +83,15 @@ We follow CRISP DM framework for this project and iterate thru the stages as we 
 | 19 | `plant` | `object` | 44 | `YV2PLANT1` | Operating plant code (`wmi + PLANT1..4`) | **Drop — Target Leakage** (Prefix leaks `wmi` and `manufacturer`) |
 | 20 | **`Make_n_Model`** | `object` | **21** | `Hino_500 Series` | **Target Variable (`y`)**: `manufacturer + '_' + Model` | **Target Label (`y`)** |
 
-### 3.3 Missing Data Evaluation 
+### 1.3 Missing Data Evaluation 
 
 The , `sns.heatmap(vtd_df.isna())` evaluates missingness across all `391,204` rows and `19` columns, confirming **0.0% missing values**:
 
 ![Missing Values Heatmap](code/images/01_missing_values_heatmap.png)
 
-## 4. Exploratory Data Analysis (EDA) and Visual Findings
+## 2. Exploratory Data Analysis (EDA) and Visual Findings
 
-### 4.1 Numerical Feature Distributions and Log-Scale Outlier Detection 
+### 2.1 Numerical Feature Distributions and Log-Scale Outlier Detection 
 
 Because the 7 numerical variables span five orders of magnitude (`Capacity` starting at `1.5 tonnes` vs. `trip_duration` reaching `332,649 seconds`), below horizontal boxplots on a logarithmic scale (`plt.xscale('log')`):
 
@@ -84,7 +107,7 @@ Because the 7 numerical variables span five orders of magnitude (`Capacity` star
 | **`GVW` (tonnes)** | 18.15 | 8.73 | 3.50 | 5.00 | 7.50 | 18.00 | 26.00 | 32.00 | 32.00 | 18.50 | -0.252 | 0.481 |
 | **`Capacity` (tonnes)** | 15.66 | 11.73 | 1.50 | 2.50 | 4.00 | 10.00 | 24.00 | 40.00 | 40.00 | 20.00 | +0.584 | 0.749 |
 
-### 4.2 Correlation Analysis and Multicollinearity Structure 
+### 2.2 Correlation Analysis and Multicollinearity Structure 
 
 We compute `vtd_df.corr(numeric_only=True)` and renders an annotated heatmap revealing **two tightly coupled collinear clusters**:
 
@@ -100,7 +123,7 @@ We compute `vtd_df.corr(numeric_only=True)` and renders an annotated heatmap rev
 | **`GVW`** | 0.6825 | 0.7359 | 0.7380 | **0.8896** | **0.9749** | **1.0000** | **0.9254** |
 | **`Capacity`** | 0.6892 | 0.7331 | 0.7405 | **0.8210** | **0.9567** | **0.9254** | **1.0000** |
 
-### 4.3 Multi-Modal Trip Duration and 3-Tier Staircase Pairplot 
+### 2.3 Multi-Modal Trip Duration and 3-Tier Staircase Pairplot 
 
 The data reveals two structural signatures of commercial European fleet operations:
 
@@ -119,7 +142,7 @@ The data reveals two structural signatures of commercial European fleet operatio
 
 ![Numerical Features Corner Pairplot](code/images/11_numerical_features_pairplot.png)
 
-### 4.4 Special Need Category Distribution and Boxplots
+### 2.4 Special Need Category Distribution and Boxplots
 
 Next we compare `trip_duration`, `total_fuel`, and `total_distance` across all 10 `special_need` cargo categories, while **Cells 24 and 27** rank the category trip counts:
 
@@ -142,7 +165,7 @@ Next we compare `trip_duration`, `total_fuel`, and `total_distance` across all 1
 | **Refuse** | 9,738 | 2.49% | 1 | `Volvo_FL` | 9,738 (**`100.0%`**) | 15,138 s (4.21 h) | 149.3 – **252.2** – 352.7 | 29.1 – **49.2** – 69.0 | Medium (1) |
 | **Timber** | 9,366 | 2.39% | 1 | `Scania_S-Series V8` | 9,366 (**`100.0%`**) | 156,900 s (43.58 h) | 772.9 – **1,345.7** – 1,917.7 | 228.0 – **397.9** – 570.8 | Heavy (1) |
 
-### 4.5 Target (`Make_n_Model`) vs. `special_need` Stacked Distribution
+### 2.5 Target (`Make_n_Model`) vs. `special_need` Stacked Distribution
 
 The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_need'])` reveals that every vehicle model operates in only **1, 2, or at most 3 `special_need` categories**:
 
@@ -172,14 +195,14 @@ The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_ne
 | 20 | **`Iveco_Eurocargo`** | 16,552 | 4.23% | Medium | 32.0 | 18.0 | 10.0 | `Box` (8,940), `Tipper` (7,612) |
 | 21 | **`Mercedes_Sprinter`** | 10,526 | 2.69% | Light | 7.5 | 5.0 | 2.5 | `Panel Van` (10,526) |
 
-### 4.6 Yearly and Geographic Distributions 
+### 2.6 Yearly and Geographic Distributions 
 
 ![Yearly Distribution of Trips](code/images/09_yearly_trip_distribution.png)
 
 - **Uniform Annual Trip Volume (`2018–2023`)**: `2018` (`64,979`, `16.61%`), `2019` (`65,270`, `16.68%`), `2020` (`65,346`, `16.70%`), `2021` (`65,238`, `16.68%`), `2022` (`65,215`, `16.67%`), `2023` (`65,156`, `16.66%`).
 - **Geographic Distribution (`Country` and `Region`)**: `Region` is 100% constant (`"Europe"`), while `Country` is uniformly distributed across **France** (`52,022`, `13.30%`), **Netherlands** (`50,874`, `13.00%`), **Italy** (`50,124`, `12.81%`), **Sweden** (`49,085`, `12.55%`), **Germany** (`47,928`, `12.25%`), **Belgium** (`47,529`, `12.15%`), **Poland** (`47,463`, `12.13%`), and **Spain** (`46,179`, `11.80%`).
 
-## 5. Baseline Machine Learning Model Strategy and Exact Performance Benchmarks
+## 3. Baseline Machine Learning Model Strategy and Exact Performance Benchmarks
 
 ### Step-by-Step Guide to Creating the Baseline Model
 
@@ -192,11 +215,11 @@ The stacked bar chart of `pd.crosstab(vtd_df['Make_n_Model'], vtd_df['special_ne
 ![Baseline Model Accuracy Progression and Recall Breakdown](code/images/12_baseline_model_progression.png)
 
 
-## 6. Feature Engineering and Preprocessing Pipeline
+## 4. Feature Engineering and Preprocessing Pipeline
 
 All transformations are encapsulated inside a reusable scikit-learn `Pipeline` (`preprocessor`) so that derived ratios and scaling parameters are computed without data leakage:
 
-### 6.1. Raw Input Features (8 Columns)
+### 4.1. Raw Input Features (8 Columns)
 
 | Feature Name | Type | Description |
 | :--- | :--- | :--- |
@@ -209,7 +232,7 @@ All transformations are encapsulated inside a reusable scikit-learn `Pipeline` (
 | `GVW` | Numeric (`float64`) | Gross Vehicle Weight rating in tonnes |
 | `special_need` | Categorical (`object`) | 10 specialized body/application types |
 
-### 6.2. In-Pipeline Derived Features (`FunctionTransformer`)
+### 4.2. In-Pipeline Derived Features (`FunctionTransformer`)
 
 A custom `add_derived_features` function computes three domain-specific operational metrics before column scaling:
 
@@ -217,13 +240,13 @@ A custom `add_derived_features` function computes three domain-specific operatio
 * `fuel_per_km = total_fuel / total_distance` (litres per km, guarded via `np.where(total_distance > 0, ..., np.nan)`).
 * `avg_speed_kmph = total_distance / trip_duration_hours` (average speed in km/h, guarded via `np.where(trip_duration_hours > 0, ..., np.nan)`).
 
-### 6.3. Column Transformation (`ColumnTransformer`)
+### 4.3. Column Transformation (`ColumnTransformer`)
 
 * **Numeric Pipeline (`10` features: 7 raw + 3 derived)**: Standardized to zero mean and unit variance via `StandardScaler()`.
 * **Categorical Pipeline (`1` feature: `special_need`)**: Encoded into 10 binary indicator columns via `OneHotEncoder(handle_unknown='ignore')`.
 * **Transformed Feature Matrix Shape**: `(312963, 20)` for training and `(78241, 20)` for testing.
 
-## 7. Baseline Model Benchmark Results
+## 5. Baseline Model Benchmark Results
 
 Four baseline classifiers were trained and evaluated on the 20-feature preprocessed space using weighted multiclass metrics and One-vs-Rest (OvR) ROC-AUC:
 
@@ -236,16 +259,16 @@ Four baseline classifiers were trained and evaluated on the 20-feature preproces
 
 ![Baseline Model Performance Comparison — F1 Score vs Train Time](code/images/13_baseline_f1_vs_train_time.png)
 
-### 7.1. Key Benchmark Takeaways
+### 5.1. Key Benchmark Takeaways
 
 * **Baseline Champion — Logistic Regression**: Achieved the highest test accuracy (**71.68%**), weighted precision (**76.19%**), weighted F1 score (**0.7049**, macro F1 **0.7237**), and multiclass OvR ROC-AUC (**0.9615**), with virtually zero overfitting (`0.7192` train vs. `0.7168` test).
 * **Decision Tree Overfitting**: Memorized the training set (`1.0000` train accuracy) but dropped to `0.7037` test accuracy and `0.8439` ROC-AUC due to unconstrained depth fitting noise in overlapping continuous telemetry features.
 * **Linear SVM Computational Bottleneck**: Required **2,002.49 seconds (~33.4 minutes)** to converge on 312,963 rows while matching Logistic Regression's linear decision boundary (`0.7166` test accuracy, `0.6972` F1) and lacking probability estimates (`probability=False` by default, yielding `NaN` for ROC-AUC).
 * **KNN Local Sensitivity**: Fast fit time (`1.26 s`) but lowest test accuracy (`0.6781`) and F1 (`0.6768`), reflecting distortion of Euclidean distances by redundant collinear trip-length features.
 
-## 8. Diagnostic Per-Class Performance (Logistic Regression)
+## 6. Diagnostic Per-Class Performance (Logistic Regression)
 
-### 8.1. Full 21-Class Classification Report and OvR ROC-AUC Breakdown
+### 6.1. Full 21-Class Classification Report and OvR ROC-AUC Breakdown
 
 Evaluating Logistic Regression on the 78,241 test samples reveals exact class-by-class precision, recall, F1, support, and One-vs-Rest ROC-AUC:
 
@@ -276,7 +299,7 @@ Evaluating Logistic Regression on the 78,241 test samples reveals exact class-by
 | **Macro Avg** | **0.7788** | **0.7340** | **0.7237** | **78,241** | | |
 | **Weighted Avg** | **0.7619** | **0.7168** | **0.7049** | **78,241** | **0.9615** | |
 
-### 8.2. Confusion Matrix and Multiclass ROC-AUC Visual Analysis
+### 6.2. Confusion Matrix and Multiclass ROC-AUC Visual Analysis
 
 * **12 Perfectly Separable Classes (`F1 = 1.0000`, `AUC = 1.000`)**: Form clean diagonal blocks on the confusion matrix because their `(Capacity, GCW, GVW, special_need)` combinations are unique.
 * **Light-Duty Pair (`Fuso_Canter` vs. `Isuzu_N-Series`)**: Half of `Isuzu_N-Series` test instances (`51.1%`) are predicted as `Fuso_Canter`, yielding `1.0000` recall for `Fuso_Canter` and `1.0000` precision for `Isuzu_N-Series` (`AUC = 0.994` and `0.993`).
@@ -286,7 +309,7 @@ Evaluating Logistic Regression on the 78,241 test samples reveals exact class-by
 
 ![Multiclass ROC — Logistic Regression](code/images/15_multiclass_roc_logistic_regression.png)
 
-## 9. Saved Model Artifact and Usage
+## 7. Saved Model Artifact and Usage
 
 The winning Logistic Regression baseline pipeline is serialized with `joblib` for downstream comparison and inference:
 
@@ -301,7 +324,7 @@ baseline_package = joblib.load("baseline_fleet_classifier_pipeline.joblib")
 
 ```
 
-## 10. Next Steps for Model Improvement
+## 8.Next Steps for Model Improvement
 
 1. **Resolve Feature Collinearity**: Drop raw `trip_duration` (which has $r = 1.000$ with `trip_duration_hours`) and test pruning redundant raw scale features (`total_distance`, `total_fuel`) in favor of `fuel_per_km`, `avg_speed_kmph`, and `trip_duration_hours`.
 2. **Stratified Splitting**: Add `stratify=y` to `train_test_split` to guarantee exact class proportions across train and test sets.
@@ -311,3 +334,12 @@ baseline_package = joblib.load("baseline_fleet_classifier_pipeline.joblib")
     3. **Decision Tree Classifier** (Tree Baseline)
     4. **Support Vector Machine (SVM)** (Maximum Margin Classification)
     5. **Random Forest Classifier** (Ensemble Benchmark)
+
+#### Outline of project
+
+- [Link to notebook](code/Capstone_project_EDASubmission_Module20_WithBaseline.ipynb)
+
+
+##### Contact and Further Information
+
+Rajeev Batra
