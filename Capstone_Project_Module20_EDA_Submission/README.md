@@ -343,4 +343,8 @@ baseline_package = joblib.load("baseline_fleet_classifier_pipeline.joblib")
 
 ##### Contact and Further Information
 
-Rajeev Batra
+**Rajeev Batra***
+
+**Email**: batra.rajeev@gmail.com 
+
+[LinkedIn](www.linkedin.com/in/rajeevbatra22)
