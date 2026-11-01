@@ -1,5 +1,6 @@
 ### Project Title
-# European Commercial Fleet Telemetry Analysis and Vehicle Classification (`Make_n_Model`)
+# Intelligent Fleet Recommendation and Optimization System
+(for European Commercial Fleet Telemetry Analysis and Vehicle Classification)
 
 **Author**
 Rajeev Batra
