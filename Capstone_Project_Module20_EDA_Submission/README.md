@@ -1,5 +1,6 @@
 ### Project Title
-# European Commercial Fleet Telemetry Analysis and Vehicle Classification (`Make_n_Model`)
+# Intelligent Fleet Recommendation and Optimization System
+(for European Commercial Fleet Vehicle Classification)
 
 **Author**
 Rajeev Batra
@@ -342,4 +343,8 @@ baseline_package = joblib.load("baseline_fleet_classifier_pipeline.joblib")
 
 ##### Contact and Further Information
 
-Rajeev Batra
+**Rajeev Batra***
+
+**Email**: batra.rajeev@gmail.com 
+
+[LinkedIn](www.linkedin.com/in/rajeevbatra22)
