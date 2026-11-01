@@ -26,7 +26,7 @@ Commercial logistics and freight operators face severe financial and environment
 #### Research Question
 What are you trying to answer?
 
- > **How can we accurately recommend the optimal commercial vehicle (`Make_n_Model`) for a given logistics trip—using pre-dispatch route, payload weight, and specialized cargo attributes—to maximize payload utilization and minimize excess fuel consumption without risking vehicle overload? and to minimize under-utilization and reduce trip operating costs by 2–3% and this is big savings given the razor thin  margins in fleet management**
+ **How can we accurately recommend the optimal commercial vehicle (`Make_n_Model`) for a given logistics trip—using pre-dispatch route, payload weight, and specialized cargo attributes—to maximize payload utilization and minimize excess fuel consumption without risking vehicle overload? and to minimize under-utilization and reduce trip operating costs by 2–3% and this is big savings given the razor thin  margins in fleet management**
 
 Specifically, this study investigates:
 1. Which supervised machine learning architecture (regularized linear models, distance-based neighborhoods, kernel SVMs, or tree-based ensembles) best maps trip and cargo characteristics to the 21 available vehicle configurations?
@@ -164,6 +164,7 @@ Permutation importance on the test set (`5,000`-row subsample, `n_repeats=10`, `
 | **7** | `Capacity` | 0.238453 | 0.005588 |
 | **8** | `axle_weight_average` | 0.089916 | 0.002271 |
 
+![ Feature Importance plot ](code/images/Feature_Importance.png)
 
 #### Next steps
 What suggestions do you have for next steps?
