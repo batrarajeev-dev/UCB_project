@@ -1,6 +1,6 @@
 ### Project Title
 # Intelligent Fleet Recommendation and Optimization System
-(for European Commercial Fleet Telemetry Analysis and Vehicle Classification)
+(for European Commercial Fleet Vehicle Classification)
 
 **Author**
 Rajeev Batra
