@@ -1,11 +1,12 @@
-### Project Title
-#### Intelligent Fleet Recommendation and  Optimization System 
+## Project Title
+### Intelligent Fleet Recommendation and  Optimization System 
 (for European Commercial Fleet Vehicle Classification - Make_n_Model)
 
 **Author**
 Rajeev Batra
+---
 
-#### Executive summary
+### Executive summary
 
  Globally over 70% of the freight moves on road and the fleet management is estimated to be a 30 billion $ business with 18% CAGR.  However, fleet management is a very thrifty business as it relies on razor thin margins and seasonality. A fleet is almost always made up of vehicles from different manufacturers, models and configurations. This ads up to the problem of selecting the right vehicle for a given mission considering multiple of parameters such as load, distance, destination etc. 
  The aim of this project is to build a vehicle recommendation and assignment model for commercial vehicle fleets to ensure that correct vehicle is assigned to correct mission as it can help the fleet owner save between 2~3% of the operational cost and this is a direct addition to the bottom line. 
@@ -13,8 +14,8 @@ Rajeev Batra
  This capstone project (`Capstone_Project_M24_final.ipynb`) develops and evaluates supervised multiclass machine learning pipelines to classify commercial fleet vehicles into **21 unique `Make_n_Model` categories** based on trip-level telematics, payload weight ratings, and specialized body/cargo requirements (`special_need`). Using a synthetic fleet dataset of **400,000 trip records** (`391,204` cleaned records after filtering), nine classification pipelines—spanning four baseline algorithms and five hyperparameter-tuned models via 3-fold `RandomizedSearchCV`—were benchmarked on accuracy, weighted Precision, weighted F1-score, One-vs-Rest (OvR) ROC-AUC, and computational training time.
 
  Across all evaluated models, test accuracy converged to a narrow ceiling of **71.50% to 71.81%** (weighted F1-score of **0.7081 to 0.7124**). Detailed class-level confusion matrix analysis revealed that **12 of the 21 vehicle classes are classified with 1.00 F1-score**, whereas **7 European heavy-duty 44-ton GCW / 26-ton GVW truck models** (`DAF_XG+`, `Iveco_S-Way`, `MAN_TGX`, `Mercedes_Actros`, `Renault_T High`, `Scania_R-Series`, and `Volvo_FH`) share identical static weight limits and overlapping cargo profiles, creating an irreducible feature-overlap ceiling under the current 8-feature input set.
-
-#### Rationale
+---
+### Rationale
 Why should anyone care about this question?
 
 Commercial logistics and freight operators face severe financial and environmental losses from suboptimal vehicle dispatching:
@@ -22,8 +23,8 @@ Commercial logistics and freight operators face severe financial and environment
 -   **Widespread Payload Under-Utilization ("Ghost Loads")**: Dispatching oversized heavy-duty trucks for light loads wastes fuel, inflates per-kilometer operating costs, and increases carbon emissions.
 -   **Severe Overload and  Safety Risks**: Conversely, assigning an undersized vehicle whose rated capacity falls below the actual cargo load ($C_{\text{pred}} < C_{\text{actual}}$) causes accelerated mechanical wear, braking hazards, regulatory fines, and unscheduled maintenance downtime.
 -   **Operational Complexity at Scale**: Dispatchers must manually balance physical cargo weight, route distance, regional terrain, and specialized cargo constraints (such as refrigerated reefers or hazardous material containment) across dozens of competing vehicle models. Automating this decision with a cost-sensitive machine learning recommender enables consistent fleet right-sizing, reduces fuel burn, and protects fleet assets.
-
-#### Research Question
+---
+### Research Question
 What are you trying to answer?
 
  **How can we accurately recommend the optimal commercial vehicle (`Make_n_Model`) for a given logistics trip—using pre-dispatch route, payload weight, and specialized cargo attributes—to maximize payload utilization and minimize excess fuel consumption without risking vehicle overload? and to minimize under-utilization and reduce trip operating costs by 2–3% and this is big savings given the razor thin  margins in fleet management**
@@ -33,7 +34,8 @@ Specifically, this study investigates:
 2. How does evaluating models with an **asymmetric domain cost-benefit loss function (`custom_fleet_loss`)** compare against standard **Weighted F1-Score (`f1_weighted`)** when multiple competing manufacturers offer functionally identical trucks within the same tonnage tier?
 3. Which trip and cargo attributes drive optimal vehicle dispatch decisions across regional logistics networks?
 
-#### Data Sources
+---
+### Data Sources
 What data will you use to answer you question?
 
 Because commercial carriers treat multi-year fleet telematics as proprietary, gathering bulk historical records across multiple fleets over a six-year window was not feasible due to data confidentiality. Instead,  based on the discussion with the learning facilitator I combined real-world fleet seed data with a rule-constrained LLM generation pipeline to build a realistic dataset of 400,000 trips across 10,000 unique vehicles spanning 2018–2024. To ensure the synthetic data reflects actual commercial operations, the generation process enforces four domain rules:
@@ -48,7 +50,7 @@ Chassis-Matched Vocations: Special mission needs are paired with appropriate cha
 
 This study uses a large-scale commercial fleet telemetry and dispatch dataset (`synthetic_fleet_data_400k_splneeds.csv`) capturing vehicle specifications, route telemetry, and cargo characteristics across multi-regional logistics operations.
 
-### Dataset Summary and  Schema
+#### Dataset Summary and  Schema
 
 | Attribute | Description |
 | :--- | :--- |
@@ -60,23 +62,22 @@ This study uses a large-scale commercial fleet telemetry and dispatch dataset (`
 | **Retained Categorical Predictors (3)** | `special_need` (e.g., Refrigerated, Curtainsider, Hazmat, Standard) |
 | **Excluded Leakage Columns** | `trip_id`, `Group`,`Serial Number	plant`,	`Region`,	`Country manufacturer`,	`wmi` , and raw trip timestamps (dropped prior to modeling due to deterministic 1:1 mapping with the target vehicle) |
 | **Train / Test Partition** | **80% Train** (`3,12,963` records) / **20% Test** (`78,241` records), stratified by `Make_n_Model` |
+---
 
-
-#### Methodology
+### Methodology
 What methods are you using to answer the question?
 
 Following the **CRISP-DM** framework, I began with Exploratory Data Analysis (EDA), feature encoding, and L1/L2 regularization to handle mixed vehicle and route attributes. I then trained and compared classification and recommendation algorithms—including K-Nearest Neighbors (KNN), tree-based ensembles, SVM, and regularized linear models—evaluated on Accuracy, Precision, Recall, and Weighted F1-Score, paired with a custom cost-benefit loss function that explicitly penalizes payload under-utilization and excess fuel burn.
 
-### 1. Exploratory Data Analysis (EDA) and  Domain Feature Engineering
+#### 1. Exploratory Data Analysis (EDA) and  Domain Feature Engineering
 
-To quantify fleet efficiency prior to modeling, we conducted 
+To quantify fleet efficiency prior to modeling, we conducted **Correlation Analysis and Multicollinearity Structure**
 
-####  Correlation Analysis and Multicollinearity Structure**
-####  Multi-Modal Trip Duration and 3-Tier Staircase Pairplot 
+##### Multi-Modal Trip Duration and 3-Tier Staircase Pairplot 
 The data reveals two structural signatures of commercial European fleet operations:
 
 1. **Five Multi-Modal Trip Duration Peaks**:
-   - `trip_duration` separates into **5 discrete operational regimes** separated by mandatory EU tachograph daily rest periods (`11 hours = 39,600 seconds`) between driving shifts on multi-day trips:
+   - `trip_duration` separates into **5 discrete operational categories** separated by mandatory EU tachograph daily rest periods (`11 hours = 39,600 seconds`) between driving shifts on multi-day trips:
 
 ![Total Distance vs Trip Duration Scatter](code/images/05_distance_vs_duration_scatter.png)
 
@@ -90,20 +91,20 @@ The data reveals two structural signatures of commercial European fleet operatio
 
 ![Numerical Features Corner Pairplot](code/images/11_numerical_features_pairplot.png)
 
-#### Special Need Category Distribution and Boxplots
+##### Special Need Category Distribution and Boxplots
 
 Next we compare `trip_duration`, `total_fuel`, and `total_distance` across all 10 `special_need` cargo categories, and later we rank the category trip counts:
 
 ![Special Need Boxplots (Duration, Fuel, Distance)](code/images/03_special_need_boxplots.png)
 
-### 2. Leakage-Free Preprocessing Pipeline
+#### 2. Leakage-Free Preprocessing Pipeline
 
 To prevent data leakage across cross-validation folds, all transformations were encapsulated inside a Scikit-Learn `ColumnTransformer`:
 * **Numerical Pipeline**: Median imputation (`SimpleImputer(strategy='median')`) followed by zero-mean, unit-variance standardization (`StandardScaler()`).
 * **Categorical Pipeline**: Mode imputation (`SimpleImputer(strategy='most_frequent')`) followed by dense one-hot encoding (`OneHotEncoder(handle_unknown='ignore', sparse_output=False)`).
 * **
 
-### 3. Models Trained and  Hyperparameter Tuning Approach
+#### 3. Models Trained and  Hyperparameter Tuning Approach
 
 Five distinct supervised classification families were trained and tuned using 3-fold stratified cross-validation (`cv=3`) optimizing **Weighted F1-Score (`scoring='f1_weighted'`)**:
 
@@ -115,82 +116,118 @@ Five distinct supervised classification families were trained and tuned using 3-
 | **K-Nearest Neighbors (KNN)** | `n_neighbors=5`, `weights='uniform'` | `GridSearchCV` over `n_neighbors` $\in \{5, 9, 15\}$, `weights` $\in \{\text{uniform}, \text{distance}\}$, `p` $\in \{1, 2\}$ | `n_neighbors=15`, `p=1` (Manhattan), `weights='uniform'` |
 | **Decision Tree** | `max_depth=15`, `random_state=42` | Baseline structural benchmark | `max_depth=15` |
 
-
-#### Results
+---
+### Results
 What did your research find?
+#### 1. Overall Model Comparison (Baseline vs. Hyperparameter-Tuned)
+Four baseline classifiers (`Logistic Regression`, `K-Nearest Neighbors`, `Decision Tree`, and linear `SVM`) and five hyperparameter-tuned models (`RandomizedSearchCV` with `n_iter=30`, `cv=3`, `scoring='f1_weighted'`) were evaluated on the 78,241-row test set:
 
-### Baseline vs. Hyperparameter-Tuned Model Performance
-
-Four baseline classifiers and five tuned classifiers using 3-fold `RandomizedSearchCV` (`n_iter=30`, `scoring='f1_weighted'`, `random_state=42`, were evaluated on the `78,241`-row test set:
-
-| Rank (by F1) | Model | Train Time (s) | Train Accuracy | Test Accuracy | Weighted Precision | Weighted F1 | Weighted ROC-AUC | Optimal Hyperparameters (`Best Params`) |
+| Rank (by Test F1) | Model | Train Time (s) | Train Accuracy | Test Accuracy | Weighted Precision | Weighted F1 Score | Multiclass ROC-AUC | Best Hyperparameters |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **1** | **Random Forest Tuned** | 826.37 | 0.8242 | 0.7150 | 0.7466 | **0.7124** | 0.9613 | `n_estimators=99`, `max_depth=20`, `max_features='log2'`, `min_samples_split=5`, `min_samples_leaf=1`, `criterion='gini'` |
-| **2** | **Decision Tree Tuned** | 27.88 | 0.7347 | 0.7163 | 0.7393 | 0.7121 | 0.9555 | `max_depth=20`, `min_samples_leaf=3`, `min_samples_split=2`, `criterion='entropy'` |
-| **3** | **SVM Tuned** | 64,684.36 | 0.7202 | **0.7181** | 0.7482 | 0.7113 | 0.9609 | `kernel='rbf'`, `C=0.3807`, `gamma=0.5089` |
-| **4** | **Logistic Regression Tuned** | 178.97 | 0.7184 | 0.7176 | 0.7313 | 0.7088 | 0.9617 | `C=73.9227`, `penalty='l2'`, `solver='lbfgs'` |
-| **5** | **KNN Tuned** | 972.58 | 1.0000 | 0.7078 | 0.7100 | 0.7081 | 0.9454 | `n_neighbors=12`, `metric='manhattan'`, `weights='distance'` |
-| **6** | **Logistic Regression (Baseline)** | 36.95 | 0.7190 | 0.7178 | **0.7494** | 0.7060 | **0.9617** | Default (`max_iter=1000`) |
-| **7** | **Decision Tree (Baseline)** | 2.96 | 1.0000 | 0.7050 | 0.7052 | 0.7051 | 0.8447 | Default (unconstrained depth) |
-| **8** | **SVM (Baseline)** | 111.14 | 0.7188 | 0.7178 | 0.7289 | 0.6994 | NaN | `kernel='linear'`, `probability=False` |
-| **9** | **K-Nearest Neighbors (Baseline)** | 0.35 | 0.7871 | 0.6819 | 0.6848 | 0.6809 | 0.9095 | Default (`n_neighbors=5`) |
+| **1** | **Random Forest Tuned** | 852.56 | 0.8242 | 0.7150 | 0.7466 | **0.7124** | 0.9613 | `criterion='gini'`, `max_depth=20`, `max_features='log2'`, `min_samples_leaf=1`, `min_samples_split=5`, `n_estimators=99` |
+| **2** | **Decision Tree Tuned** | 29.19 | 0.7347 | 0.7163 | 0.7393 | 0.7121 | 0.9555 | `criterion='entropy'`, `max_depth=20`, `min_samples_leaf=3`, `min_samples_split=2` |
+| **3** | **SVM Tuned** | 67,184.43 | 0.7202 | **0.7181** | 0.7482 | 0.7113 | 0.9609 | `kernel='rbf'`, `C=0.3807`, `gamma=0.5089` |
+| **4** | **Logistic Regression Tuned** | 180.99 | 0.7184 | 0.7176 | 0.7313 | 0.7088 | 0.9617 | `C=73.9227`, `penalty='l2'`, `solver='lbfgs'` |
+| **5** | **KNN Tuned** | 999.42 | 1.0000 | 0.7078 | 0.7100 | 0.7081 | 0.9454 | `metric='manhattan'`, `n_neighbors=12`, `weights='distance'` |
+| **6** | **Logistic Regression (Baseline)** | 36.85 | 0.7190 | 0.7178 | **0.7494** | 0.7060 | **0.9617** | Default (`max_iter=1000`) |
+| **7** | **Decision Tree (Baseline)** | 2.79 | 1.0000 | 0.7045 | 0.7049 | 0.7047 | 0.8444 | Default (unconstrained depth) |
+| **8** | **SVM (Baseline)** | 115.64 | 0.7188 | 0.7178 | 0.7289 | 0.6994 | `NaN` | Default (`kernel='linear'`, `probability=False`) |
+| **9** | **K-Nearest Neighbors (Baseline)** | 0.32 | 0.7871 | 0.6819 | 0.6848 | 0.6809 | 0.9095 | Default (`n_neighbors=5`) |
+| — | *Random Forest Tuned (Full Train Set Eval)* | — | *0.8242* | — | *0.8766* | *0.8224* | *0.9613* | *Evaluated on all 312,963 training rows (Recall = 0.8242)* |
 
-* **Best Overall F1-Score**: `Random Forest Tuned` achieved the highest weighted F1-score (`0.712359`) and strong generalization (`ROC-AUC = 0.9613`) in `826.37s`.
-* **Best Efficiency-to-Performance Ratio**: `Decision Tree Tuned` achieved virtually identical weighted F1 (`0.712064`) and higher test accuracy (`71.63%`) in just **27.88 seconds**, while constraining `max_depth=20` and `min_samples_leaf=3` eliminated the severe overfitting of the baseline tree (`100.00%` train accuracy vs. `70.50%` test accuracy) and improved ROC-AUC from `0.8447` to `0.9555`.
-* **Diminishing Returns of Kernel SVM**: `SVM Tuned` (RBF kernel) required **64,684.36 seconds (~17.97 hours)** for 90 CV fits—more than `2,300×` slower than `Decision Tree Tuned`—while yielding a lower weighted F1 (`0.711283`).
+* **Winning Model (`Random Forest Tuned`)**: Achieved the highest test weighted F1 score (**0.712359**) and a **0.961298** multiclass ROC-AUC (`ovr`, weighted).
+* **Regularization Impact on Tree Models**: The unconstrained baseline `Decision Tree` memorized the training set (`Train Accuracy = 1.0000`, `Test Accuracy = 0.7045`, `ROC-AUC = 0.8444`). Constraining `max_depth=20` and `min_samples_leaf=3` in `Decision Tree Tuned` reduced training accuracy to **0.7347**, boosted test F1 to **0.7121**, and jumped ROC-AUC by **+11.11 percentage points** to **0.9555** in just **29.19 seconds**.
+* **Diminishing Returns of Kernel SVM at Scale**: `SVM Tuned` (`kernel='rbf'`, `probability=True`) required **67,184.43 seconds (~18.66 hours)** to complete 90 fits across 312,963 training rows, achieving a marginally higher test accuracy (**0.7181**) but a lower weighted F1 (**0.7113**) than `Random Forest Tuned` and `Decision Tree Tuned`.
 
-### Class-Level Performance Breakdown Across Models
+#### 2. Feature Importance Findings
+Extracting native Gini importances from the winning `RandomForestClassifier` (Cell 70) demonstrates that static vehicle weight/capacity specifications and `special_need` account for **86.90%** of total predictive power, whereas trip-level telemetry contributes less than **10%**:
 
-Inspecting the test-set classification reports and training confusion matrix reveals three distinct performance regimes across the 21 classes:
-
-| Performance Tier | Vehicle Classes (`Make_n_Model`) | Test F1 Range (Across Tuned Models) | Root Cause in Dataset |
-| :--- | :--- | :---: | :--- |
-| **Tier 1: Perfectly Separable (12 Classes)** | `DAF_LF`, `Hino_500 Series`, `Iveco_Daily`, `Iveco_Eurocargo`, `MAN_TGE`, `MAN_TGL`, `Mercedes_Atego`, `Mercedes_Sprinter`, `Renault_Master`, `Scania_S-Series V8`, `Volvo_FH16`, `Volvo_FL` | `0.98 – 1.00` | Unique combinations of static weight limits (`GVW`, `GCW`, `Capacity`) and/or dedicated `special_need` assignments (e.g., `Refuse` → `Volvo_FL`, `Timber` → `Scania_S-Series V8`). |
-| **Tier 2: Moderately Confused Light/Medium Trucks (2 Classes)** | `Fuso_Canter`, `Isuzu_N-Series` | `0.66 – 0.80` | Overlapping light-truck payload ratings; in the training confusion matrix , `7,371` of `14,475` `Isuzu_N-Series` trips are mispredicted as `Fuso_Canter`. |
-| **Tier 3: Heavily Overlapping 44t Heavy-Duty Trucks (7 Classes)** | `Iveco_S-Way` (`0.42–0.54`), `MAN_TGX` (`0.40–0.46`), `Mercedes_Actros` (`0.20–0.27`), `Volvo_FH` (`0.19–0.26`), `DAF_XG+` (`0.15–0.22`), `Renault_T High` (`0.00–0.17`), `Scania_R-Series` (`0.00–0.17`) | `0.00 – 0.54` | Identical static weight specs (`GCW = 44.0`, `GVW = 26.0`, `Capacity = 24.0`) and shared long-haul `special_need` categories (`Box`, `Refrigerated`, `Curtainsider`, `Container`). Linear/RBF models collapse `Scania_R-Series` and `Renault_T High` predictions into `Volvo_FH`, `Mercedes_Actros`, `DAF_XG+`, and `Iveco_S-Way`. |
-
-### Feature Importance Analysis
-
-Permutation importance on the test set (`5,000`-row subsample, `n_repeats=10`, `scoring='f1_weighted'`) ranked the `8` input features by mean F1 drop when shuffled:
-
-| Rank | Original Feature | Permutation Importance (Mean F1 Drop) | Standard Deviation (`std`) |
-| :---: | :--- | :---: | :---: |
-| **1** | `total_distance` | 0.460367 | 0.008543 |
-| **2** | `GVW` | 0.425812 | 0.004104 |
-| **3** | `total_fuel` | 0.395061 | 0.007641 |
-| **4** | `GCW` | 0.377863 | 0.005576 |
-| **5** | `trip_duration` | 0.283885 | 0.005894 |
-| **6** | `special_need` | 0.242254 | 0.004924 |
-| **7** | `Capacity` | 0.238453 | 0.005588 |
-| **8** | `axle_weight_average` | 0.089916 | 0.002271 |
+| Rank | Feature Name | Aggregated Native Importance | Category |
+| :---: | :--- | :---: | :--- |
+| **1** | `GCW` (Gross Combination Weight) | **0.270816** (27.08%) | Static Vehicle Specification |
+| **2** | `GVW` (Gross Vehicle Weight) | **0.232391** (23.24%) | Static Vehicle Specification |
+| **3** | `special_need` (One-Hot Encoded Body Type) | **0.191209** (19.12%) | Operational / Body Category |
+| **4** | `Capacity` (Payload Capacity) | **0.174566** (17.46%) | Static Vehicle Specification |
+| **5** | `axle_weight_average` | **0.040170** (4.02%) | Dynamic Trip Load Telemetry |
+| **6** | `total_fuel` | **0.021284** (2.13%) | Dynamic Trip Telemetry |
+| **7** | `total_distance` | **0.016782** (1.68%) | Dynamic Trip Telemetry |
+| **8** | `trip_duration`  | **0.014665** (1.47%) | Dynamic Trip Telemetry |
 
 ![ Feature Importance plot ](code/images/Feature_Importance.png)
 
-#### Next steps
+#### 3. Per-Class Performance & Why Accuracy Plateaus at ~71.5%
+Comparing the per-class test F1 scores across all 21 vehicle models reveals three distinct classification categories:
+
+1. **Category 1 — 12 Perfectly Separable Classes (F1 = 1.00)**: Every model achieves 0.98–1.00 F1 on these 12 vehicles because their static `(GCW, GVW, Capacity)` tuples or `special_need` assignments uniquely identify them.
+2. **Category 2 — 2 Light/Medium Trucks (`Fuso_Canter` & `Isuzu_N-Series`, F1 = 0.72–0.76)**: The confusion matrix shows zero confusion with any of the other 19 classes; errors occur strictly between `Fuso_Canter` and `Isuzu_N-Series`.
+3. **Category 3 — 7 Heavy-Duty 44t Regional Haulers (F1 = 0.03–0.51)**: `DAF_XG+`, `Iveco_S-Way`, `MAN_TGX`, `Mercedes_Actros`, `Renault_T High`, `Scania_R-Series`, and `Volvo_FH` share identical static weight ratings (`GCW = 44.0`, `GVW = 26.0`, `Capacity = 24.0`) and operate in overlapping `Box`, `Refrigerated`, and `Curtainsider` roles. Because static weight specs cannot separate them, classifiers default toward higher-prior or slightly more distinct classes (`Volvo_FH`, `Mercedes_Actros`, `Iveco_S-Way`) while collapsing on `Scania_R-Series` (test recall = 0.02 in RF, 0.00 in LR/SVM) and `Renault_T High` (test recall = 0.10 in RF, 0.00 in LR).
+
+---
+
+
+
+### Next steps
 What suggestions do you have for next steps?
 
-1. **Incorporate Non-Leaking Geographic and Temporal Features**:
-   * Add `Country` (one-hot or target encoded) and temporal features extracted from `trip_start_time` and `trip_end_time` (e.g., trip day-of-week, month/seasonality, and multi-day trip indicator) into `ColumnTransformer` to test whether regional fleet allocations help separate the 7 overlapping European 44-ton heavy-duty truck models (`DAF_XG+`, `Iveco_S-Way`, `MAN_TGX`, `Mercedes_Actros`, `Renault_T High`, `Scania_R-Series`, `Volvo_FH`) without leaking direct vehicle identifiers (`Group`, `wmi`, `plant`, `Serial Number`).
-2. **Engineer Domain-Specific Load and  Efficiency Interaction Features**:
-   * Introduce payload utilization and specific fuel consumption ratios inside `add_derived_features(X)` to capture mechanical differences among same-tonnage vehicles:
-     * `load_utilization_ratio = axle_weight_average / Capacity`
-     * `axle_to_gvw_ratio = axle_weight_average / GVW`
-     * `specific_fuel_per_ton_km = fuel_per_km / axle_weight_average`
-   * Prune collinear raw variables (`total_fuel`, `trip_duration`, `GCW`) for linear and distance-based models to mitigate multicollinearity ($r > 0.97$).
-3. **Implement a Two-Stage Hierarchical Classifier for the 44-Ton Heavy-Duty Cluster**:
-   * Because 12 classes already reach `1.00` F1-score and errors are concentrated in the 7-class heavy-duty cluster (`GCW = 44.0`, `GVW = 26.0`, `Capacity = 24.0`) plus the `Fuso_Canter` / `Isuzu_N-Series` pair, route records falling into the 44-ton segment to a dedicated second-stage gradient boosted classifier (`HistGradientBoostingClassifier`, `XGBoost`, or `LightGBM`) tuned specifically on subtle fuel-burn, speed, and axle-load distributions.
+1. **Include Legitimate Geographic & Temporal Features (`Country`, `Region`, Trip Seasonality)**:
+   * While `Group`, `plant`, `wmi`, and `Serial Number` must remain excluded because they directly encode manufacturer/model strings (target leakage), `Country`, `Region`, and date features from `trip_start_time` / `trip_end_time` (month, day-of-week, multi-day trip indicator) are available in `vtd_df` and were not passed to `X`. Incorporating `Country` and `Region` may provide strong priors for separating European OEMs (`Renault_T High` in France, `Scania_R-Series` in Italy/Sweden, `DAF_XG+` in the Netherlands, `MAN_TGX` / `Mercedes_Actros` in Germany).
+2. **Engineer Trip-Invariant Load & Powertrain Efficiency Ratios**:
+   * Raw `trip_duration`, `total_distance`, and `total_fuel` scale with route length ($r > 0.97$) rather than vehicle identity. Adding trip-invariant physical ratios will give tree models sharper splits within identical `(GCW, GVW, Capacity)` tiers:
+     * **Axle-to-GVW Load Factor**: `axle_weight_average / GVW` and `axle_weight_average / Capacity`
+     * **Specific Fuel Burn per Ton-Km**: `fuel_per_km / axle_weight_average`
+     * **Combination Weight Ratios**: `GVW / GCW` and `Capacity / GCW`
+3. **Transition to a Two-Stage (Hierarchical) Classification Architecture**:
+   * Because 12 classes are already solved (`F1 = 1.00`) and errors are strictly confined to two isolated sub-clusters (`Fuso_Canter` vs. `Isuzu_N-Series` and the 7-class 44t heavy-duty cluster), replace the flat 21-class classifier with a two-stage pipeline:
+     * **Stage 1 (Rule/Tree Router)**: Route trips by `(GCW, GVW, Capacity, special_need)` into solved classes vs. the two ambiguous sub-clusters.
+     * **Stage 2 (Specialized Gradient Boosted Trees)**: Train dedicated `LightGBM`, `XGBoost`, or `CatBoost` classifiers exclusively on the 7-class 44t heavy-duty subset using fine-grained fuel consumption, speed, and load distributions.
+4. **Tighten Regularization on `Random Forest` and Prune Collinear Features**:
+   * `Random Forest Tuned` exhibits an **10.92 percentage point gap** between training accuracy (**82.42%**) and test accuracy (**71.50%**) due to `min_samples_leaf=1`. Increasing `min_samples_leaf` (e.g., `5` to `20`), dropping redundant raw features (`trip_duration` vs. `trip_duration_hours`), and retiring full-dataset `SVC(probability=True)` searches (which took 18.7 hours) will substantially reduce training time and overfitting.
+
+---
+
+### Model Export & Inference Usage
+
+The best-performing pipeline (`Random Forest Tuned`) is serialized via `joblib` to `Capstone_best_model_package.joblib` along with its expected raw feature schema:
+
+```python
+import joblib
+import pandas as pd
+
+# Load exported model package
+package = joblib.load("Capstone_best_model_package.joblib")
+model = package["model"]
+
+# Define raw trip input (derived features are computed automatically inside the pipeline)
+raw_input = {
+    "trip_duration": 908,
+    "total_distance": 160.545,
+    "total_fuel": 32,
+    "axle_weight_average": 2000,
+    "Capacity": 20,
+    "GCW": 30,
+    "GVW": 20,
+    "special_need": "Flatbed"
+}
+
+new_data_df = pd.DataFrame([raw_input])
+prediction = model.predict(new_data_df)
+print(f"Predicted Model for the new data: {prediction[0]}")
+# Output: Predicted Model for the new data: DAF_LF
+```
 
 
-#### Outline of project
+---
+### Outline of project
 
 - [Link to notebook](code/Capstone_Project_M24_final.ipynb)
 - [Link to extracted best model package](code/best_model_package.joblib)
 - [Link to sample test data notebook](code/test_model.ipynb)
 - [Link to datafile](code/data/synthetic_fleet_data_400k_splneeds.csv)
 
-##### Contact and Further Information
+---
+### Contact and Further Information
 
-**Rajeev Batra***
+**Rajeev Batra**
 
 **Email**: batra.rajeev@gmail.com 
 
