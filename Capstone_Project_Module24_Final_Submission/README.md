@@ -142,6 +142,9 @@ Four baseline classifiers (`Logistic Regression`, `K-Nearest Neighbors`, `Decisi
 | **9** | **K-Nearest Neighbors (Baseline)** | 0.32 | 0.7871 | 0.6819 | 0.6848 | 0.6809 | 0.9095 | Default (`n_neighbors=5`) |
 | — | *Random Forest Tuned (Full Train Set Eval)* | — | *0.8242* | — | *0.8766* | *0.8224* | *0.9613* | *Evaluated on all 312,963 training rows (Recall = 0.8242)* |
 
+![ Time Taken To Train plot ](code/images/TimeTakenToTrainAndF1Score.png)
+
+
 * **Winning Model (`Random Forest Tuned`)**: Achieved the highest test weighted F1 score (**0.712359**) and a **0.961298** multiclass ROC-AUC (`ovr`, weighted).
 * **Regularization Impact on Tree Models**: The unconstrained baseline `Decision Tree` memorized the training set (`Train Accuracy = 1.0000`, `Test Accuracy = 0.7045`, `ROC-AUC = 0.8444`). Constraining `max_depth=20` and `min_samples_leaf=3` in `Decision Tree Tuned` reduced training accuracy to **0.7347**, boosted test F1 to **0.7121**, and jumped ROC-AUC by **+11.11 percentage points** to **0.9555** in just **29.19 seconds**.
 * **Diminishing Returns of Kernel SVM at Scale**: `SVM Tuned` (`kernel='rbf'`, `probability=True`) required **67,184.43 seconds (~18.66 hours)** to complete 90 fits across 312,963 training rows, achieving a marginally higher test accuracy (**0.7181**) but a lower weighted F1 (**0.7113**) than `Random Forest Tuned` and `Decision Tree Tuned`.
