@@ -165,11 +165,11 @@ Extracting native Gini importances from the winning `RandomForestClassifier` (Ce
 
 ![ Feature Importance plot ](code/images/Feature_Importance.png)
 
-#### 3. Per-Class Performance & Why Accuracy Plateaus at ~71.5%
+#### 3. Per-Class Performance and Why Accuracy Plateaus at ~71.5%
 Comparing the per-class test F1 scores across all 21 vehicle models reveals three distinct classification categories:
 
 1. **Category 1 — 12 Perfectly Separable Classes (F1 = 1.00)**: Every model achieves 0.98–1.00 F1 on these 12 vehicles because their static `(GCW, GVW, Capacity)` tuples or `special_need` assignments uniquely identify them.
-2. **Category 2 — 2 Light/Medium Trucks (`Fuso_Canter` & `Isuzu_N-Series`, F1 = 0.72–0.76)**: The confusion matrix shows zero confusion with any of the other 19 classes; errors occur strictly between `Fuso_Canter` and `Isuzu_N-Series`.
+2. **Category 2 — 2 Light/Medium Trucks (`Fuso_Canter` and `Isuzu_N-Series`, F1 = 0.72–0.76)**: The confusion matrix shows zero confusion with any of the other 19 classes; errors occur strictly between `Fuso_Canter` and `Isuzu_N-Series`.
 3. **Category 3 — 7 Heavy-Duty 44t Regional Haulers (F1 = 0.03–0.51)**: `DAF_XG+`, `Iveco_S-Way`, `MAN_TGX`, `Mercedes_Actros`, `Renault_T High`, `Scania_R-Series`, and `Volvo_FH` share identical static weight ratings (`GCW = 44.0`, `GVW = 26.0`, `Capacity = 24.0`) and operate in overlapping `Box`, `Refrigerated`, and `Curtainsider` roles. Because static weight specs cannot separate them, classifiers default toward higher-prior or slightly more distinct classes (`Volvo_FH`, `Mercedes_Actros`, `Iveco_S-Way`) while collapsing on `Scania_R-Series` (test recall = 0.02 in RF, 0.00 in LR/SVM) and `Renault_T High` (test recall = 0.10 in RF, 0.00 in LR).
 
 ---
@@ -179,9 +179,9 @@ Comparing the per-class test F1 scores across all 21 vehicle models reveals thre
 ### Next steps
 What suggestions do you have for next steps?
 
-1. **Include Legitimate Geographic & Temporal Features (`Country`, `Region`, Trip Seasonality)**:
+1. **Include Legitimate Geographic and Temporal Features (`Country`, `Region`, Trip Seasonality)**:
    * While `Group`, `plant`, `wmi`, and `Serial Number` must remain excluded because they directly encode manufacturer/model strings (target leakage), `Country`, `Region`, and date features from `trip_start_time` / `trip_end_time` (month, day-of-week, multi-day trip indicator) are available in `vtd_df` and were not passed to `X`. Incorporating `Country` and `Region` may provide strong priors for separating European OEMs (`Renault_T High` in France, `Scania_R-Series` in Italy/Sweden, `DAF_XG+` in the Netherlands, `MAN_TGX` / `Mercedes_Actros` in Germany).
-2. **Engineer Trip-Invariant Load & Powertrain Efficiency Ratios**:
+2. **Engineer Trip-Invariant Load and Powertrain Efficiency Ratios**:
    * Raw `trip_duration`, `total_distance`, and `total_fuel` scale with route length ($r > 0.97$) rather than vehicle identity. Adding trip-invariant physical ratios will give tree models sharper splits within identical `(GCW, GVW, Capacity)` tiers:
      * **Axle-to-GVW Load Factor**: `axle_weight_average / GVW` and `axle_weight_average / Capacity`
      * **Specific Fuel Burn per Ton-Km**: `fuel_per_km / axle_weight_average`
